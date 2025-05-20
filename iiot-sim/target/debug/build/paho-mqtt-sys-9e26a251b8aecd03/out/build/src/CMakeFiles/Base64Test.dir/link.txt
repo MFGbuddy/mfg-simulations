@@ -1,1 +1,0 @@
-/usr/bin/cc  -ffunction-sections -fdata-sections -fPIC --target=arm64-apple-macosx -mmacosx-version-min=15.2 -g -arch arm64 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/Base64Test.dir/Base64.c.o -o Base64Test

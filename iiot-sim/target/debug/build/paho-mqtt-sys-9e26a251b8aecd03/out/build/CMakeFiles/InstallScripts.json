@@ -1,8 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/Users/aniruddha/Desktop/iiot-sim/target/debug/build/paho-mqtt-sys-9e26a251b8aecd03/out/build/cmake_install.cmake",
-		"/Users/aniruddha/Desktop/iiot-sim/target/debug/build/paho-mqtt-sys-9e26a251b8aecd03/out/build/src/cmake_install.cmake"
-	],
-	"Parallel" : false
-}
