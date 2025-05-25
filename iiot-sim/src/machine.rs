@@ -24,14 +24,31 @@ pub trait Machine {
 
 pub fn simulate_value(normal_low: f32, normal_high: f32, low: f32, high: f32) -> f32 {
     let mut rng = rand::rng();
+
     let anomaly = rng.random_bool(0.1); // 10% chance for anomaly
     if anomaly {
         if rng.random_bool(0.5) {
-            rng.random_range(low..normal_low) // low anomaly
+            if low < normal_low {
+                rng.random_range(low..normal_low)
+            } else {
+                // fallback to normal range if invalid
+                rng.random_range(normal_low..normal_high)
+            }
         } else {
-            rng.random_range(normal_high..high) // high anomaly
+            if normal_high < high {
+                rng.random_range(normal_high..high)
+            } else {
+                // fallback to normal range if invalid
+                rng.random_range(normal_low..normal_high)
+            }
         }
     } else {
-        rng.random_range(normal_low..normal_high) // normal value
+        if normal_low < normal_high {
+            rng.random_range(normal_low..normal_high)
+        } else {
+            // fallback to a constant if even normal range is invalid
+            normal_low
+        }
     }
 }
+
