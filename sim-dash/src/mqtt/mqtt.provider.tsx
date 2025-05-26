@@ -13,7 +13,7 @@ const MqttContext = createContext<{
 export const MqttProvider = ({ children }: { children: React.ReactNode }) => {
     const [state, dispatch] = useReducer(mqttReducer, initialState);
 
-    const [client, setClient] = useState({})
+    const [client, setClient] = useState<any>(null)
 
     useEffect(() => {
         const mqttClient = mqtt.connect('ws://test.mosquitto.org:8080', {
@@ -26,6 +26,7 @@ export const MqttProvider = ({ children }: { children: React.ReactNode }) => {
 
     useEffect(() => {
 
+        console.log(client)
         if (client) {
             mqttClient.on('connect', () => {
                 console.log('Connected to broker');

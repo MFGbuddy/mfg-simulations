@@ -10,13 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.1.7",
     "echarts": "^5.6.0",
     "echarts-for-react": "^3.0.2",
     "mqtt": "^5.13.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-grid-layout": "^1.5.1",
-    "react-router": "^7.6.0"
+    "react-router": "^7.6.0",
+    "tailwindcss": "^4.1.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",

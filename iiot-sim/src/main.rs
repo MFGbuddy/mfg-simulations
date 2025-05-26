@@ -7,7 +7,9 @@ mod simulation_loop;
 
 use std::sync::{Arc, Mutex};
 
-use actix_web::{web, App, HttpServer};
+use actix_web::{web, App, HttpServer, http};
+use actix_cors::Cors;
+
 
 use shared_machine::{ActiveMachine};
 use simulation_loop::start_simulation_loop;
@@ -26,8 +28,15 @@ async fn main() -> std::io::Result<()> {
      start_simulation_loop(active_machine.clone(), mqtt.clone());
    
      HttpServer::new(move || {
+
+        let cors = Cors::default()
+        .allowed_origin("http://localhost:5173")
+        .allowed_methods(vec!["GET", "POST", "PUT", "DELETE"])
+        .allowed_headers(vec![http::header::CONTENT_TYPE])
+        .max_age(3600);
+
         App::new()
-            // .app_data(web::Data::new(mqtt.clone()))
+            .wrap(cors)
             .app_data(web::Data::new(active_machine.clone()))
             .route("/machine/start/{machine_type}", web::get().to(machine_rest_controller::start_machine))
             .route("/machine/stop", web::get().to(machine_rest_controller::stop_machine))
