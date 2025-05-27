@@ -31,14 +31,7 @@ export const MqttProvider = ({ children }: { children: React.ReactNode }) => {
         if (client) {
             mqttClient.on('connect', () => {
                 console.log('Connected to broker');
-                mqttClient.subscribe('iiot-dashboard', { qos: 1 }, (err) => {
-                    if (err) {
-                        setIsSubscribed(false);
-                    } else {
-                        console.log('Subscribed to iiot-dashboard');
-                        setIsSubscribed(true);
-                    }
-                }) 
+                mqttClient.subscribe('iiot-dashboard', { qos: 1 }) 
             });
 
             mqttClient.on('message', (_, message) => {

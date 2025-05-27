@@ -55,7 +55,7 @@ const TabletPressMachineComponent = () => {
   useEffect(() => {
     if (state.message?.data) {
       const data = state.message.data;
-      setChartData((prev) => [...prev.slice(-10), [data.timestamp, data.compression_force]]);
+      setChartData((prev) => [...prev.slice(-200), [data.timestamp, data.compression_force]]);
       setHistory((prev) => [...prev.slice(-10), data]);
     }
   }, [state])
