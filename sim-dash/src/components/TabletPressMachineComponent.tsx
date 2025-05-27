@@ -11,14 +11,14 @@ const TabletPressMachineComponent = () => {
   const [chartData, setChartData] = useState<[string, number][]>([]);
 
   const [width, setWidth] = useState(window.innerWidth);
-  const [height, setHeight] = useState(window.innerHeight);
-  const [btnStatus, setBtnStatus] = useState(false);
+  const [isStarted, setIsStarted] = useState(false);
 
   const onBtnStart = () => {
-    setBtnStatus(btnStatus => !btnStatus);
-    console.log(btnStatus)
+    
+    const nextStatus = !isStarted;
+    setIsStarted(nextStatus);
 
-    if (btnStatus) {
+    if (nextStatus) {
       fetch('http://localhost:8080/machine/start/tabletpress').then((response) => {
         if (response.ok) {
           console.log('Tablet press started successfully');
@@ -30,6 +30,7 @@ const TabletPressMachineComponent = () => {
       fetch('http://localhost:8080/machine/stop').then((response) => {
         if (response.ok) {
           console.log('Tablet press stopped successfully');
+          //  setBtnStatus(btnStatus => !btnStatus);
         } else {
           console.error('Failed to stop tablet press');
         }
@@ -39,7 +40,6 @@ const TabletPressMachineComponent = () => {
 
   const updateDimensions = () => {
     setWidth(window.innerWidth);
-    setHeight(window.innerHeight);
   }
 
   useEffect(() => {
@@ -136,10 +136,13 @@ const TabletPressMachineComponent = () => {
   return (
     <>
       <div className='flex justify-between items-center bg-gray-200 border-gray-300 border-1 p-2 m-2'>
-        <h1 className='text-3xl'> Tablet Press Machine</h1>
-        <input type="button" className='bg-blue-500 text-white font-bold rounded px-2 py-2' value={btnStatus ? 'STOP' : 'START'} onClick={onBtnStart} />
+        <h1 className='text-3xl'> 💊 Tablet Press Machine</h1>
+        <div className='flex justify-between items-center'>
+          {isStarted ? <span className='text-3xl'>🔴</span> : <span className='text-3xl'>🟢</span>}
+          <input type="button" className='bg-blue-500 text-white font-bold rounded px-2 py-2 ml-3' value={isStarted ? 'STOP' : 'START'} onClick={onBtnStart} />
+        </div>
       </div>
-      <GridLayout className="example-layout" layout={layoutConfig} rowHeight={30} width={width - 20}>
+      <GridLayout className="example-layout" layout={layoutConfig} rowHeight={30} width={width}>
 
         <div key="gauge1" style={{ border: '1px solid #ccc' }}>
           <ReactECharts option={gauge('Tablet Weight', tabletWeight, 450, 550, 'mg')} />

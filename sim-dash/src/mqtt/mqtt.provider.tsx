@@ -12,6 +12,7 @@ const MqttContext = createContext<{
 
 export const MqttProvider = ({ children }: { children: React.ReactNode }) => {
     const [state, dispatch] = useReducer(mqttReducer, initialState);
+    const [isSubscribed, setIsSubscribed] = useState(false);
 
     const [client, setClient] = useState<any>(null)
 
@@ -30,7 +31,14 @@ export const MqttProvider = ({ children }: { children: React.ReactNode }) => {
         if (client) {
             mqttClient.on('connect', () => {
                 console.log('Connected to broker');
-                mqttClient.subscribe('iiot-dashboard', { qos: 1 })
+                mqttClient.subscribe('iiot-dashboard', { qos: 1 }, (err) => {
+                    if (err) {
+                        setIsSubscribed(false);
+                    } else {
+                        console.log('Subscribed to iiot-dashboard');
+                        setIsSubscribed(true);
+                    }
+                }) 
             });
 
             mqttClient.on('message', (_, message) => {

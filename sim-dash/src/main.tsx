@@ -8,8 +8,13 @@ import {
 } from "react-router";
 import TabletPressMachineComponent from './components/TabletPressMachineComponent.tsx';
 import { MqttProvider } from './mqtt/mqtt.provider.tsx';
+import { MainDashboard } from './components/MainDashboard.tsx';
 
 const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <MainDashboard />
+  },
   {
     path: "/tabletpress",
     element: <TabletPressMachineComponent />
